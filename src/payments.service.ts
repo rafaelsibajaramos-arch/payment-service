@@ -175,6 +175,7 @@ export class PaymentsService {
       if (duplicate) return tx.payment.findUniqueOrThrow({ where: { id: paymentId } });
       const payment = await tx.payment.findUnique({ where: { id: paymentId } });
       if (!payment || payment.orderId !== orderId) throw new NotFoundException('No existe el pago asociado al pedido entregado');
+      if (payment.provider !== 'wompi' || payment.providerStatus !== 'APPROVED') throw new ConflictException('La recepción requiere un pago aprobado por Wompi');
       if (acceptedAmount.gt(payment.amount)) throw new ConflictException('El valor aceptado supera el valor autorizado');
       const details = await tx.chargeDetail.findMany({ where: { paymentId }, orderBy: { orderItemId: 'asc' } });
       if (details.length !== lines.length) throw new ConflictException('El cierre logístico no coincide con las líneas confirmadas del pedido');
