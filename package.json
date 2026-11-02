@@ -11,7 +11,7 @@
     "prisma:generate": "prisma generate",
     "prisma:deploy": "prisma migrate deploy",
     "lint": "eslint src --config eslint.config.mjs --max-warnings=0",
-    "test": "npm run build && node --test test/outbox.worker.test.cjs test/payments.service.test.cjs",
+    "test": "npm run build && node --test test/outbox.worker.test.cjs test/payments.service.test.cjs test/wompi.test.cjs",
     "test:integration": "npm run build && node --test test/events.service.integration.test.cjs test/outbox.integration.test.cjs"
   },
   "dependencies": {
